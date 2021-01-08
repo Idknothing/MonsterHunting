@@ -1,4 +1,4 @@
-# Canavar Avı
+# Monster Hunting
 
 An example of the Monster Hunting game on Discord Bots with vue js.
 

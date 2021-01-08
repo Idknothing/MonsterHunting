@@ -1,79 +1,78 @@
 let app1=new Vue({
   el:'#app-1',
   data:{
-    seninIlerleme: 100,
-    canavarIlerleme: 100,
-    oyunEkranı: true,
-    playerSira: 'p',
+    yourProgress: 100,
+    monsterProgress: 100,
+    gameScreen: true,
     logs:[],
   },
   methods:{
     newGame:function(){
-      this.seninIlerleme = 100;
-      this.canavarIlerleme = 100;
-      this.oyunEkranı = false;
+      this.yourProgress = 100;
+      this.monsterProgress = 100;
+      this.gameScreen = false;
       this.logs =[];
     },
     attack: function(){
       let randomA = Math.floor(Math.random() * 15);
       let randomB = Math.floor(Math.random() * 15);
-      this.seninIlerleme = this.seninIlerleme - randomA;
-      this.canavarIlerleme = this.canavarIlerleme - randomB;
-      this.logs.push({turn: 'p', text: "CANAVARIN CANINI AZALTTTIN: (" + randomB + ")"});
-      this.logs.push({turn: 'm', text: "CANAVAR SALDIRISI: (" + randomA + ")"});
+      this.yourProgress = this.yourProgress - randomA;
+      this.monsterProgress = this.monsterProgress - randomB;
+      this.logs.push({turn: 'p', text: "YOU HIT MONSTER: " + randomB + " DAMAGE!"});
+      this.logs.push({turn: 'm', text: "MONSTER HIT YOU: " + randomA + " DAMAGE!"});
 
     },
     specialAttack: function(){
       let randomA = Math.floor(Math.random() * 20);
       let randomB = Math.floor(Math.random() * 20);
-      this.seninIlerleme = this.seninIlerleme - randomA;
-      this.canavarIlerleme = this.canavarIlerleme - randomB;
-      this.logs.push({turn: 'p', text: "ÖZEL SALDIRI: (" + randomB + ")"});
-      this.logs.push({turn: 'm', text: "CANAVAR SALDIRISI: (" + randomA + ")"});
+      this.yourProgress = this.yourProgress - randomA;
+      this.monsterProgress = this.monsterProgress - randomB;
+      this.logs.push({turn: 'p', text: "SPECIAL ATTACK: " + randomB + " DAMAGE!"});
+      this.logs.push({turn: 'm', text: "MONSTER HIT YOU: " + randomA + " DAMAGE!"});
     },
     heal: function(){
       let randomA = Math.floor(Math.random() * 16);
       let randomB = Math.floor(Math.random() * 15);
-      this.seninIlerleme = this.seninIlerleme + randomA - randomB;
-      this.logs.push({turn: 'p', text: "İLK YARDIM: (" + randomA + ")"});
-      this.logs.push({turn: 'm', text: "CANAVAR SALDIRISI: (" + randomB + ")"});
+      this.yourProgress = this.yourProgress + randomA - randomB;
+      this.logs.push({turn: 'p', text: "FIRST AID: " + randomA + " DAMAGE!"});
+      this.logs.push({turn: 'm', text: "MONSTER HIT YOU: " + randomB + " DAMAGE!"});
     },
     giveUp: function(){
-      this.seninIlerleme = 0;
-      let r = confirm('Kaybettiniz :( yeni oyun?');
+      this.yourProgress = 0;
+      let r = confirm('You lose :( New game?');
       if(r){
-        this.seninIlerleme = 100;
-        this.canavarIlerleme = 100;
+        this.yourProgress = 100;
+        this.monsterProgress = 100;
       }
     },
 
   },
   watch:{
-    seninIlerleme: function(){
-      if(this.seninIlerleme < 0){
-        this.seninIlerleme = 0;
-        let r = confirm('Kaybettiniz :( yeni oyun?');
+    yourProgress: function(){
+      if(this.yourProgress <= 0){
+        this.yourProgress = 0;
+        let r = confirm('You lose :( New game?');
         if(r){
-          this.seninIlerleme = 100;
-          this.canavarIlerleme = 100;
+          this.yourProgress = 100;
+          this.monsterProgress = 100;
           this.logs=[];
         }
-              this.oyunEkranı = true;
+              this.gameScreen = true;
 
       }
 
 
     },
-    canavarIlerleme: function(){
-      if(this.canavarIlerleme < 0){
-        this.canavarIlerleme = 0;
-          let r = confirm('Tebrikler kazandınız!!! :) yeni oyun?');
+    monsterProgress: function(){
+      if(this.monsterProgress <= 0){
+        this.monsterProgress = 0;
+          let r = confirm('Congratulations! You win! :( New Game?');
           if(r){
-            this.seninIlerleme = 100;
-            this.canavarIlerleme = 100;
+            this.yourProgress = 100;
+            this.monsterProgress = 100;
             this.logs=[];
           }
-          this.oyunEkranı = true;
+          this.gameScreen = true;
 
       }
 
